@@ -1,17 +1,34 @@
-import React from 'react'
+import React from "react";
+import useConversation from "../../zustand/useConversation";
+import { useAuthContext } from "../../context/AuthContext";
+import { extractTime } from "../../utils/extractTime";
 
-const Message = () => {
+const Message = ({ message }) => {
+  const { authUser } = useAuthContext();
+  const { selectedConversation } = useConversation();
+  const fromMe = message.senderId === authUser._id;
+  const chatClassRoom = fromMe ? "chat-end" : "chat-start";
+  const profilePic = fromMe
+    ? authUser.profilePic
+    : selectedConversation?.profilePic;
+  const bubbleBgColor = fromMe ? "bg-blue-500" : "";
+  const formattedTime=extractTime(message.createdAt);
+
   return (
-    <div className='chat chat-end'>
-        <div className='chat-image avatar'>
-            <div className='w-10 rounded-full'>
-                <img src="https://avatar.iran.liara.run/public/48" alt="Tailwind css chat bubble component." />
-            </div>
+    <div className={`chat ${chatClassRoom}`}>
+      <div className="chat-image avatar">
+        <div className="w-10 rounded-full">
+          <img alt="Tailwind css chat bubble component." src={profilePic} />
         </div>
-        <div className='chat-bubble text-white bg-blue-500'>Hi! what is up?</div>
-        <div className='chat-footer opacity-50 text-xs flex gap-1 items-center'></div>
+      </div>
+      <div className={`chat-bubble text-white  ${bubbleBgColor}`}>
+        {message.message}
+      </div>
+      <div className="chat-footer opacity-50 text-xs flex gap-1 items-center">
+        {formattedTime}
+      </div>
     </div>
-  )
-}
+  );
+};
 
-export default Message
+export default Message;

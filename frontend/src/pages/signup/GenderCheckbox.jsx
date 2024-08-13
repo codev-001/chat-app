@@ -1,6 +1,6 @@
 import React from "react";
 
-const GenderCheckbox = () => {
+const GenderCheckbox = ({ onCheckboxChange, selectedGender }) => {
   return (
     <div className="flex">
       <div className="form-control">
@@ -9,7 +9,11 @@ const GenderCheckbox = () => {
           <input
             type="checkbox"
             defaultChecked
-            className="checkbox checkbox-info"
+            className={`checkbox checkbox-info ${
+              selectedGender === "male" ? "selected" : ""
+            }`}
+            checked={selectedGender === "male"}
+            onChange={() => onCheckboxChange("male")}
           />
         </label>
       </div>
@@ -19,7 +23,11 @@ const GenderCheckbox = () => {
           <input
             type="checkbox"
             defaultChecked
-            className="checkbox checkbox-info"
+            className={`checkbox checkbox-info ${
+              selectedGender === "female" ? "selected" : ""
+            }`}
+            checked={selectedGender === "female"}
+            onChange={() => onCheckboxChange("female")}
           />
         </label>
       </div>
