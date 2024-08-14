@@ -6,9 +6,9 @@ import messageRoutes from "../backend/Routes/message.route.js"
 import userRoutes from "../backend/Routes/user.routes.js"
 
 import cookieParser from "cookie-parser";
+import { app, server } from "./sockets/socket.js";
 
 
-const app=express();
 const PORT=process.env.PORT || 5000 ;
 
 dotenv.config()
@@ -23,7 +23,7 @@ app.use("/api/users",userRoutes)
 
 
 
-app.listen(PORT,() => {
+server.listen(PORT,() => {
     connectToMongodb();
     console.log(`Server is running at port ${PORT}:`) 
 
